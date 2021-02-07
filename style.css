@@ -1,3 +1,8 @@
+body{
+
+background-color:black;
+
+}
 #meals{
 margin-top: 10px;
 display: grid;
@@ -7,7 +12,7 @@ grid-template-columns: repeat(3, 1fr);
 
 
 .meal{
-    background-color: aqua;
+    background-color:seagreen;
 width: 300px;
 border-radius: 10px;
 text-align: center;
@@ -17,4 +22,24 @@ cursor: pointer;
 
 .meal img{
   width: 300px;  
+}
+.singleMealHead{
+color:yellow;
+
+}
+.ingredients{
+  color: aqua;
+}
+.ulColor{
+color: white;
+}
+.liColor{
+color: white;
+
+}
+
+.single-meal img{
+
+width: 400px;
+
 }

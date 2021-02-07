@@ -1,29 +1,29 @@
 const searchInput = document.getElementById('search');
-    const submit = document.getElementById('submit');
-    const mealsEle = document.getElementById('meals');
-    const resultHead = document.getElementById('result-heading')
-    const single_mealEl = document.getElementById('sMeal');
-    const button = document.getElementById('button')
+const submit = document.getElementById('submit');
+const mealsEle = document.getElementById('meals');
+const resultHead = document.getElementById('result-heading')
+const single_mealEl = document.getElementById('sMeal');
+const button = document.getElementById('button')
 
 
-const searchMeal = meals=>{
-meals.preventDefault();
+const searchMeal = meals => {
+    meals.preventDefault();
 
-const term = searchInput.value
+    const term = searchInput.value
 
-fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
-.then(res => res.json())
-.then(data => {
-    
-    
-    single_mealEl.innerHTML=""
+    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
+        .then(res => res.json())
+        .then(data => {
 
-if (data.meals === null) {
-   resultHead.innerHTML = `<p>there are no search result</p>`
-}else{
 
-   mealsEle.innerHTML = data.meals
-   .map(meal=>`
+            single_mealEl.innerHTML = ""
+
+            if (data.meals === null) {
+                resultHead.innerHTML = `<p>there are no search result</p>`
+            } else {
+
+                mealsEle.innerHTML = data.meals
+                    .map(meal => `
     <div class="meal">
     <img onclick="displayFoodInfo(${meal.idMeal})" src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
     <div class="mealInfo" mealId="${meal.idMeal}">
@@ -31,10 +31,10 @@ if (data.meals === null) {
     </div>
     </div>
     `
-    ) .join("");
-}
-}) 
-search.value ="";
+                    ).join("");
+            }
+        })
+    search.value = "";
 
 }
 
@@ -44,62 +44,52 @@ button.addEventListener('click', searchMeal)
 
 
 
-const getMealById = mealId =>{
+const getMealById = mealId => {
 
-fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
-.then(res => res.json())
-.then(data =>{
+    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
+        .then(res => res.json())
+        .then(data => {
 
-const meal = data.meals[0];
+            const meal = data.meals[0];
 
-addMealToDom(meal);
-})
+            addMealToDom(meal);
+        })
 }
 
-const addMealToDom = meal =>{
+const addMealToDom = meal => {
 
-const ingredients=[];
-for (let i = 1; 1 <=20; i++) {
-    
-    if(meal[`strIngredient${i}`]){
-ingredients.push(
+    const ingredients = [];
+    for (let i = 1; 1 <= 20; i++) {
 
-    `${meal[`strIngredient${i}`]}-${meal[`strMeasure${i}`]}`
-)
+        if (meal[`strIngredient${i}`]) {
+            ingredients.push(
 
-    }else{break;}
-}
-single_mealEl.innerHTML=`
+                `${meal[`strIngredient${i}`]}-${meal[`strMeasure${i}`]}`
+            )
+
+        } else { break; }
+    }
+    single_mealEl.innerHTML = `
 
 <div class="single-meal">
-<h1>${meal.strMeal}</h1>
 <img src="${meal.strMealThumb}"/>
-</div>
-<div class="singleMealInfo">
-
-
+<h1 class="singleMealHead">${meal.strMeal}</h1>
 
 </div>
-
 <div class="main">
-<h2>ingredient</h2>
-<ul>
-${ingredients.map(ing => `<li>${ing}</li>`).join("")}
+<h2 class="ingredients">INGREDIENTS</h2>
+<ul class="ulColor">
+${ingredients.map(ing => `<li class="liColor">${ing}</li>`).join("")}
 </ul>
 </div>
-
 
 `
 }
 
 
+const displayFoodInfo = mealId => {
 
-
-
-
-const displayFoodInfo = mealId =>{
-
-getMealById(mealId);
+    getMealById(mealId);
 }
 
 
@@ -107,27 +97,6 @@ getMealById(mealId);
 
 
 
-// const displayCountryDetail = name => {
-
-//     const url = `https://restcountries.eu/rest/v2/name/${name}`
-//    fetch(url)
-//    .then(res => res.json())
-//    .then(data => renderCountryInfo(data[0]));
-//    }
-   
-//    const renderCountryInfo = country => {
-   
-//    console.log(country);
-//    const countryDetails = document.getElementById('countryDetails')
-//    countryDetails.innerHTML = `
-//    <h1>${country.name}</h1>
-//    <p>${country.population}</p>
-//    <p>${country.region}</p>
-//    <p>${country.subregion}</p>
-//    <img src="${country.flag}">
-//    `
-   
-//    }
 
 
 
