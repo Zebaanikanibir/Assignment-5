@@ -19,7 +19,7 @@ const searchMeal = meals => {
             single_mealEl.innerHTML = ""
 
             if (data.meals === null) {
-                resultHead.innerHTML = `<p>there are no search result</p>`
+                resultHead.innerHTML = `<p class="error">no search result! try again</p>`
             } else {
 
                 mealsEle.innerHTML = data.meals
