@@ -1,13 +1,12 @@
+
 const searchInput = document.getElementById('search');
-const submit = document.getElementById('submit');
 const mealsEle = document.getElementById('meals');
 const resultHead = document.getElementById('result-heading')
 const single_mealEl = document.getElementById('sMeal');
 const button = document.getElementById('button')
 
 
-const searchMeal = meals => {
-    meals.preventDefault();
+const searchMeal = () => {
 
     const term = searchInput.value
 
@@ -25,33 +24,29 @@ const searchMeal = meals => {
                 mealsEle.innerHTML = data.meals
                     .map(meal => `
     <div class="meal">
-    <img onclick="displayFoodInfo(${meal.idMeal})" src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
+    <img onclick="displayMealInfo(${meal.idMeal})" src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
     <div class="mealInfo" mealId="${meal.idMeal}">
-    <h3>${meal.strMeal}</h3>
+    <h3 class="mealsName">${meal.strMeal}</h3>
     </div>
     </div>
     `
-                    ).join("");
+                    )
+                    .join("");
             }
         })
     search.value = "";
 
 }
 
-button.addEventListener('click', searchMeal)
 
 
 
-
-
-const getMealById = mealId => {
+const displayMealInfo = mealId => {
 
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
         .then(res => res.json())
         .then(data => {
-
             const meal = data.meals[0];
-
             addMealToDom(meal);
         })
 }
@@ -77,7 +72,7 @@ const addMealToDom = meal => {
 
 </div>
 <div class="main">
-<h2 class="ingredients">INGREDIENTS</h2>
+<h4 class="ingredients">Ingredients</h4>
 <ul class="ulColor">
 ${ingredients.map(ing => `<li class="liColor">${ing}</li>`).join("")}
 </ul>
@@ -86,11 +81,6 @@ ${ingredients.map(ing => `<li class="liColor">${ing}</li>`).join("")}
 `
 }
 
-
-const displayFoodInfo = mealId => {
-
-    getMealById(mealId);
-}
 
 
 
