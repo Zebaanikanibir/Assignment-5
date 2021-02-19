@@ -10,7 +10,8 @@ const searchMeal = () => {
 
     const term = searchInput.value
 
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
+    if (term.trim()) {
+        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
         .then(res => res.json())
         .then(data => {
 
@@ -35,6 +36,7 @@ const searchMeal = () => {
             }
         })
     search.value = "";
+    }else{resultHead.innerHTML = `<p class="error">no search result! try again</p>`}
 
 }
 
@@ -54,7 +56,7 @@ const displayMealInfo = mealId => {
 const addMealToDom = meal => {
 
     const ingredients = [];
-    for (let i = 1; 1 <= 20; i++) {
+    for (let i = 1; i <= 20; i++) {
 
         if (meal[`strIngredient${i}`]) {
             ingredients.push(
